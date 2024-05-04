@@ -19,14 +19,13 @@ public class ChatGptResponse {
     public static class Choice {
         private int index;
         private Message message;
-
     }
 
     public boolean isEmptyChoiceList(){
         return choices.isEmpty();
     }
 
-    public String getGPTResponseMessage(){
+    public String getGptResponseMessage(){
         return  choices.get(0).getMessage().getContent();
     }
 }
