@@ -1,5 +1,6 @@
 package com.server.autodevlog.gpt.dto;
 
+import com.server.autodevlog.gpt.convertor.GptConvertor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ public class UserResponseDto {
 
     @Builder
     public UserResponseDto(ChatGPTResponse gptResponse){
-        response = gptResponse.getGPTResponseMessage();
+        String convertedGptResponse = GptConvertor.deleteChangeLine(gptResponse.getGPTResponseMessage());
+        response = convertedGptResponse;
     }
 }

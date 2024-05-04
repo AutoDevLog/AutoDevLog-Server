@@ -1,5 +1,7 @@
 package com.server.autodevlog.gpt.controller;
 
+import com.server.autodevlog.global.exception.CustomException;
+import com.server.autodevlog.global.exception.ErrorCode;
 import com.server.autodevlog.gpt.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,10 +26,15 @@ public class GPTController {
 
     @PostMapping("/request")
     public ResponseEntity<UserResponseDto> chat(@RequestBody UserRequestDto dto){
+
         ChatGPTRequest request = ChatGPTRequest.builder()
                 .model(model)
                 .prompt(dto.getUserPrompt())
                 .build();
+
+        if(request.getMessages().isEmpty()){
+            throw new CustomException(ErrorCode.GPT_API_ERROR);
+        }
 
         ChatGPTResponse response = template.postForObject(url,request,ChatGPTResponse.class);
         UserResponseDto userResponseDto = UserResponseDto.builder()
