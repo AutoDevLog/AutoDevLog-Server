@@ -1,24 +1,29 @@
 package com.server.autodevlog.gpt.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.awt.*;
 import java.util.List;
 
-@Data
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChatGPTResponse {
+
     private List<Choice> choices;
 
-    @Data
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Choice {
         private int index;
         private Message message;
 
+    }
+
+    public String getGPTResponseMessage(){
+        return  choices.get(0).getMessage().getContent();
     }
 }
