@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/gpt")
@@ -27,20 +24,17 @@ public class GPTController {
     @PostMapping("/request")
     public ResponseEntity<UserResponseDto> chat(@RequestBody UserRequestDto dto){
 
-        ChatGPTRequest request = ChatGPTRequest.builder()
+        ChatGptRequest request = ChatGptRequest.builder()
                 .model(model)
                 .prompt(dto.getUserPrompt())
                 .build();
+        ChatGptResponse response = template.postForObject(url,request, ChatGptResponse.class);
 
-        if(request.getMessages().isEmpty()){
-            throw new CustomException(ErrorCode.GPT_API_ERROR);
-        }
+        if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);}
 
-        ChatGPTResponse response = template.postForObject(url,request,ChatGPTResponse.class);
         UserResponseDto userResponseDto = UserResponseDto.builder()
                 .gptResponse(response)
                 .build();
-
         return ResponseEntity.ok(userResponseDto);
     }
 

@@ -3,16 +3,15 @@ package com.server.autodevlog.gpt.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ChatGPTResponse {
+public class ChatGptResponse {
 
-    private List<Choice> choices;
+    private List<Choice> choices = new ArrayList<>();
 
     @Getter
     @NoArgsConstructor
@@ -21,6 +20,10 @@ public class ChatGPTResponse {
         private int index;
         private Message message;
 
+    }
+
+    public boolean isEmptyChoiceList(){
+        return choices.isEmpty();
     }
 
     public String getGPTResponseMessage(){

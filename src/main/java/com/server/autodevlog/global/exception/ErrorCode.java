@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    GPT_API_ERROR(HttpStatus.SERVICE_UNAVAILABLE,"GPP-500","GPT API가 정상적으로 응답하지 않습니다.");
+    GPT_API_ERROR(HttpStatus.SERVICE_UNAVAILABLE,"GPT-503","GPT API가 정상적으로 응답하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

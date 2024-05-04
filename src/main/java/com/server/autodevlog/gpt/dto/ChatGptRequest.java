@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ChatGPTRequest {
+public class ChatGptRequest {
     private String model;
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     @Builder
-    public ChatGPTRequest(String model, String prompt) {
+    public ChatGptRequest(String model, String prompt) {
         this.model = model;
-        this.messages =  new ArrayList<>();
         this.messages.add(new Message("user", prompt));
     }
 }
