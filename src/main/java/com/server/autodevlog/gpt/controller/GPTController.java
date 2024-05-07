@@ -2,6 +2,7 @@ package com.server.autodevlog.gpt.controller;
 
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
+import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,11 @@ public class GPTController {
     private String model;
     @Value("${openai.api.url}")
     private String url;
+
+    @Value("${openai.embedding.options.model}")
+    private String embedModel;
+    @Value("${openai.embedding.url}")
+    private String embedUrl;
 
     private final RestTemplate template;
 
@@ -39,4 +45,14 @@ public class GPTController {
         return ResponseEntity.ok(userResponseDto);
     }
 
+    @PostMapping("/embed")
+    public ResponseEntity<UserResponseDto.Vectorization> embed(@RequestBody UserRequestDto userRequestDto){
+        EmbedRequest request = EmbedRequest.builder()
+                .input(userRequestDto.getUserPrompt())
+                .model(embedModel)
+                .build();
+        EmbedResponse response = template.postForObject(embedUrl, request, EmbedResponse.class);
+        if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.EMBED_API_ERROR);} //embed api 무응답 예외 처리
+        return ResponseEntity.ok(EmbeddingConvertor.toVectorization(response));
+    }
 }
