@@ -17,7 +17,7 @@ public class BlogController {
 
     @PostMapping("/velog-post")
     @Operation(summary = "벨로그 포스팅 API", description = "벨로그 로그인이 구현되지 않아서, body의 token 값으로 벨로그 access_token 값을 넣어주세요.")
-    public ResponseEntity postTest(@RequestBody VelogPostRequestDto velogPostRequestDto) {
+    public ResponseEntity velogPosting(@RequestBody VelogPostRequestDto velogPostRequestDto) {
         blogService.postToVelog(velogPostRequestDto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
