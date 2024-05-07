@@ -1,9 +1,11 @@
 package com.server.autodevlog.blog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public class VelogPostDto {
+@AllArgsConstructor
+public class VelogPostRequestDto {
     String title;
     String body;
     String token;
