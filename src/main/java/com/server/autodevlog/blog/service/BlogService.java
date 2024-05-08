@@ -1,18 +1,24 @@
 package com.server.autodevlog.blog.service;
 
-import com.server.autodevlog.blog.dto.VelogPostDto;
+import com.server.autodevlog.blog.dto.VelogPostRequestDto;
+import com.server.autodevlog.blog.dto.VelogPostResponseDto;
+import com.server.autodevlog.global.exception.CustomException;
+import com.server.autodevlog.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BlogService {
-    public void postToVelog(VelogPostDto velogPostDto) {
-        String title = velogPostDto.getTitle();
-        String body = velogPostDto.getBody();
+    public void postToVelog(VelogPostRequestDto velogPostRequestDto) throws CustomException {
+        String title = velogPostRequestDto.getTitle();
+        String body = velogPostRequestDto.getBody();
 
         String query = buildVelogQuery(title, body);
 
@@ -20,14 +26,22 @@ public class BlogService {
                 .baseUrl("https://v2.velog.io")
                 .build();
 
-        ResponseEntity<String> response = webClient.post()
+        ResponseEntity<VelogPostResponseDto> response = webClient.post()
                 .uri("/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Cookie", "access_token=" + velogPostDto.getToken() + ";")
+                .header("Cookie", "access_token=" + velogPostRequestDto.getToken() + ";")
                 .bodyValue(query)
                 .retrieve()
-                .toEntity(String.class)
+                .onStatus(HttpStatusCode::isError, res -> {
+                    throw new CustomException(ErrorCode.VELOG_RESPONSE_ERROR); // Velog 서버 400, 500 예외처리
+                })
+                .toEntity(VelogPostResponseDto.class)
                 .block();
+
+        Optional.ofNullable(response.getBody()) // response body의 null 체크
+                .map(VelogPostResponseDto::getData)
+                .map(VelogPostResponseDto.VelogResponseData::getWritePost) // Posting 실패 예외처리
+                .orElseThrow(() -> new CustomException(ErrorCode.VELOG_POSTING_ERROR));
     }
 
     private String buildVelogQuery(String title, String body) {
