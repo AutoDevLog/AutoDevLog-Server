@@ -10,7 +10,6 @@ public class UserResponseDto {
 
     @Builder
     public UserResponseDto(ChatGptResponse gptResponse){
-        String convertedGptResponse = GptConvertor.deleteChangeLine(gptResponse.getGptResponseMessage());
-        response = convertedGptResponse;
+        response = gptResponse.getGptResponseMessage();
     }
 }
