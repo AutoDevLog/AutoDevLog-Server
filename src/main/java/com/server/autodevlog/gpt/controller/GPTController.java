@@ -4,6 +4,7 @@ import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
 import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.dto.*;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class GPTController {
     }
 
     @PostMapping("/embed")
+    @Operation(summary = "워드 임베딩 API", description = "Body에 블로그 글을 넣어주세요. 토큰으로 끊어서 벡터리스트를 반환합니다.")
     public ResponseEntity<Word2VecResponseDTO> embed(@RequestBody Word2VecRequestDTO userRequestDto){
         EmbedRequest request = EmbedRequest.builder()
                 .input(userRequestDto.getUserPrompt())
