@@ -4,6 +4,8 @@ import com.server.autodevlog.gpt.convertor.GptConvertor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class UserResponseDto {
     private String response;
