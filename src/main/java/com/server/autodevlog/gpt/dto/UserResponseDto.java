@@ -15,9 +15,4 @@ public class UserResponseDto {
         String convertedGptResponse = GptConvertor.deleteChangeLine(gptResponse.getGptResponseMessage());
         response = convertedGptResponse;
     }
-    @Builder
-    @Getter
-    public static class Vectorization{
-        List<Double> vectorList;
-    }
 }

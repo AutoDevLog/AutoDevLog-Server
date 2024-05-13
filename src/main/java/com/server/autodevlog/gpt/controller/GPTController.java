@@ -46,13 +46,13 @@ public class GPTController {
     }
 
     @PostMapping("/embed")
-    public ResponseEntity<UserResponseDto.Vectorization> embed(@RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<Word2VecResponseDTO> embed(@RequestBody Word2VecRequestDTO userRequestDto){
         EmbedRequest request = EmbedRequest.builder()
                 .input(userRequestDto.getUserPrompt())
                 .model(embedModel)
                 .build();
         EmbedResponse response = template.postForObject(embedUrl, request, EmbedResponse.class);
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.EMBED_API_ERROR);} //embed api 무응답 예외 처리
-        return ResponseEntity.ok(EmbeddingConvertor.toVectorization(response));
+        return ResponseEntity.ok(EmbeddingConvertor.toWord2VecResponseDTO(response));
     }
 }
