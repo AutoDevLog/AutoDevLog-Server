@@ -29,6 +29,7 @@ public class GPTController {
     private final RestTemplate template;
 
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
+    @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
     public ResponseEntity<String> chat(@RequestBody UserRequestDto dto){
 
         ChatGptRequest request = ChatGptRequest.builder() // gpt api request http 바디
