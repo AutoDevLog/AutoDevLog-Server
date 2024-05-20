@@ -29,21 +29,18 @@ public class GPTController {
     private final RestTemplate template;
 
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
-    public ResponseEntity<UserResponseDto> chat(@RequestBody UserRequestDto dto){
+    @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
+    public ResponseEntity<String> chat(@RequestBody UserRequestDto dto){
 
         ChatGptRequest request = ChatGptRequest.builder() // gpt api request http 바디
                 .model(model)
-                .prompt(dto.getUserPrompt())
+                .dto(dto)
                 .build();
         ChatGptResponse response = template.postForObject(url,request, ChatGptResponse.class); //gpt api request
 
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);} //gpt api 무응답 예외 처리
 
-        UserResponseDto userResponseDto = UserResponseDto.builder() //유저 Response 생성
-                .gptResponse(response)
-                .build();
-
-        return ResponseEntity.ok(userResponseDto);
+        return ResponseEntity.ok(response.getGptResponseMessage());
     }
 
     @PostMapping("/embed")
