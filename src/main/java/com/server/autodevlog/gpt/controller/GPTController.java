@@ -4,6 +4,7 @@ import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
 import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.dto.*;
+import com.server.autodevlog.gpt.service.CosineService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class GPTController {
     private String embedUrl;
 
     private final RestTemplate template;
-
+    private final CosineService cosineService;
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
     public ResponseEntity<UserResponseDto> chat(@RequestBody UserRequestDto dto){
 
@@ -56,5 +57,13 @@ public class GPTController {
         EmbedResponse response = template.postForObject(embedUrl, request, EmbedResponse.class);
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.EMBED_API_ERROR);} //embed api 무응답 예외 처리
         return ResponseEntity.ok(EmbeddingConvertor.toWord2VecResponseDTO(response));
+    }
+
+    @PostMapping("/cosine")
+    @Operation(summary = "코사인 유사도 API", description = "Body에 비교하는 벡터리스트들을 넣어주세요. 코사인유사도를 반환합니다.")
+    public ResponseEntity<CosineResponseDTO> cosine(@RequestBody CosineRequestDTO cosineRequestDTO){
+        double cosineSimilarity = cosineService.calculateCosineSimilarity(cosineRequestDTO.getVector1(), cosineRequestDTO.getVector2());
+        CosineResponseDTO cosineResponseDTO = CosineResponseDTO.builder().cosineSimilarity(cosineSimilarity).build();
+        return ResponseEntity.ok(cosineResponseDTO);
     }
 }
