@@ -29,7 +29,7 @@ public class BlogService {
         ResponseEntity<VelogPostResponseDto> response = webClient.post()
                 .uri("/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Cookie", "access_token=" + velogPostRequestDto.getToken() + ";")
+                .header("Cookie", velogPostRequestDto.getToken())
                 .bodyValue(query)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, res -> {
