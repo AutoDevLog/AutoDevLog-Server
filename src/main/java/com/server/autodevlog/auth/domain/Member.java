@@ -1,20 +1,39 @@
 package com.server.autodevlog.auth.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@Getter
 public class Member implements UserDetails {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_pk")
+    private Long pk;
+
+    @Column(name = "account_role")
+    private String role;
+
+    @Column(name = "user_id", unique = true)
+    private String userId;
+
+    @Column(name = "velog_access_token")
+    private String velogAccessToken;
+
+    @Column(name = "velog_refresh_token")
+    private String velogRefreshToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        ArrayList<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+        auths.add(new SimpleGrantedAuthority(getRole()));
+        return auths;
     }
 
     @Override
@@ -24,12 +43,12 @@ public class Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return getUserId();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -39,11 +58,11 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
