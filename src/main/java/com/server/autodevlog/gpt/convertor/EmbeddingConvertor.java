@@ -13,4 +13,12 @@ public class EmbeddingConvertor {
                 .vectorList(embedding)
                 .build();
     }
+
+    public static String doubleQuotationEscape(String target){
+        return target.replace("\"","\\\"");
+    }
+
+    public static List<Double> EmbedReponseToDoubleList(EmbedResponse response){
+        return response.getData().get(0).getEmbedding();
+    }
 }

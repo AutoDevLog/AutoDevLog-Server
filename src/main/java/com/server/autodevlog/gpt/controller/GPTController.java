@@ -6,9 +6,11 @@ import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.dto.*;
 import com.server.autodevlog.gpt.service.CosineService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,7 +33,7 @@ public class GPTController {
     private final CosineService cosineService;
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
     @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
-    public ResponseEntity<String> chat(@RequestBody UserRequestDto dto){
+    public ResponseEntity<String> chat(@RequestBody @Valid UserRequestDto dto){
 
         ChatGptRequest request = ChatGptRequest.builder() // gpt api request http 바디
                 .model(model)
