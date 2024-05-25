@@ -6,6 +6,7 @@ import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.dto.*;
 import com.server.autodevlog.gpt.service.CosineService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AnalyzeController {
     private final CosineService cosineService;
     @PostMapping("/cosine") // 유저 프롬프트 -> gpt api
     @Operation(summary = "코사인 유사도 추출",description = "Request Body 담겨 있는 issue, inference, solution을 통해 게시글을 생성하고 생성된 게시글을 기반으로 사전에 입력된 게시글의 벡터리스트 와의 코사인 유사도 Response")
-    public ResponseEntity<CosineResponseDTO> chatCosine(@RequestBody AnalyzeRequest request){
+    public ResponseEntity<CosineResponseDTO> chatCosine(@RequestBody @Valid AnalyzeRequest request){
 
         UserRequestDto dto = UserRequestDto.builder()
                 .issue(request.getIssue())
