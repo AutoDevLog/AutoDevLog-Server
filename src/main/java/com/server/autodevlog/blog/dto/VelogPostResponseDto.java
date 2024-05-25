@@ -10,6 +10,6 @@ public class VelogPostResponseDto {
 
     @Getter
     public static class VelogResponseData {
-        Map<String, String> writePost;
+        Map<Object, Object> writePost;
     }
 }
