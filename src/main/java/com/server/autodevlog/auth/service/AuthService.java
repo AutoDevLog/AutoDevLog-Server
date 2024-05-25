@@ -50,11 +50,10 @@ public class AuthService {
                 .toEntity(String.class)
                 .block();
 
-        System.out.println(response);
-
         List<String> cookies = response.getHeaders().get("Set-Cookie");
-        String accessToken = cookies.get(0).split(";")[0] + ";";
-        String refreshToken = cookies.get(1).split(";")[0] + ";";
+
+        String accessToken = cookies.get(0).split(";")[0].substring(13);
+        String refreshToken = cookies.get(1).split(";")[0].substring(14);
 
         return new TempTokenReturnDto(accessToken, refreshToken);
     }
