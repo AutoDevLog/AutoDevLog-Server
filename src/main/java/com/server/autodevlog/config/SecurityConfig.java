@@ -1,8 +1,15 @@
 package com.server.autodevlog.config;
 
+import com.server.autodevlog.auth.repository.MemberRepository;
+import com.server.autodevlog.auth.service.CustomUserDetailsService;
+import com.server.autodevlog.auth.service.JwtAuthenticationFilter;
+import com.server.autodevlog.auth.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -22,6 +29,10 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtService jwtService;
+    private final MemberRepository memberRepository;
+    private final CustomUserDetailsService customUserDetailsService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -31,8 +42,8 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(
                         HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(
-                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.cors(httpSecurityCorsConfigurer -> corsConfigurationSource());
 
@@ -42,7 +53,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/auth");
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**", "/auth/login");
     }
 
     @Bean
@@ -56,5 +67,20 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtService,
+                memberRepository);
+        return jwtAuthenticationFilter;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        return new ProviderManager(daoAuthenticationProvider);
     }
 }
