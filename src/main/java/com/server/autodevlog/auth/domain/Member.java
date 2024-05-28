@@ -1,7 +1,12 @@
 package com.server.autodevlog.auth.domain;
 
-import jakarta.persistence.*;
-import lombok.Getter;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,24 +14,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Entity
+
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RedisHash(value = "auto-devlog-user")
 public class Member implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_pk")
     private Long pk;
 
-    @Column(name = "account_role")
     private String role;
 
-    @Column(name = "user_id", unique = true)
+    @Indexed
+    // unique 필요?
     private String userId;
 
-    @Column(name = "velog_access_token")
     private String velogAccessToken;
 
-    @Column(name = "velog_refresh_token")
     private String velogRefreshToken;
 
     @Override
