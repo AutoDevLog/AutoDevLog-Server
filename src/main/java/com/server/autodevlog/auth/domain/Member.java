@@ -29,12 +29,16 @@ public class Member implements UserDetails {
     private String role;
 
     @Indexed
-    // unique 필요?
     private String userId;
 
     private String velogAccessToken;
 
     private String velogRefreshToken;
+
+    public void setVelogTokens(String accessToken, String refreshToken) {
+        this.velogAccessToken = accessToken;
+        this.velogRefreshToken = refreshToken;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

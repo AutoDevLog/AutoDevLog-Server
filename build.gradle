@@ -39,6 +39,7 @@ dependencies {
 	testImplementation 'org.assertj:assertj-core:3.6.2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.auth0:java-jwt:4.0.0'
 }
 
 tasks.named('bootBuildImage') {

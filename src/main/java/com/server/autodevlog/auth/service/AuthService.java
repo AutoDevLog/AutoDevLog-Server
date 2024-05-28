@@ -1,8 +1,9 @@
 package com.server.autodevlog.auth.service;
 
+import com.server.autodevlog.auth.domain.Member;
 import com.server.autodevlog.auth.dto.LoginRequestDto;
 import com.server.autodevlog.auth.dto.LoginResponseDto;
-import com.server.autodevlog.auth.dto.TempTokenReturnDto;
+import com.server.autodevlog.auth.repository.MemberRepository;
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -18,8 +20,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private final MemberRepository memberRepository;
+    private final JwtService jwtService;
+
+    @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        return new LoginResponseDto();
+
+        Member member = memberRepository.findByUserId(loginRequestDto.getUserId())
+                .orElseGet(
+                        () -> saveUser(loginRequestDto)
+                );
+
+        String serviceAccessToken = jwtService.createAccessToken(loginRequestDto.getUserId());
+        String serviceRefreshToken = jwtService.createRefreshToken(loginRequestDto.getUserId());
+
+        return LoginResponseDto.builder()
+                .accessToken(serviceAccessToken)
+                .refreshToken(serviceRefreshToken)
+                .build();
+    }
+
+    @Transactional
+    public Member saveUser(LoginRequestDto loginRequestDto) {
+        Member member = Member.builder()
+                .role("ADMIN")
+                .userId(loginRequestDto.getUserId())
+                .build();
+        memberRepository.save(member);
+        return member;
     }
 
     public void sendVelogEmail(String email) {
@@ -41,7 +69,7 @@ public class AuthService {
                 .block();
     }
 
-    public TempTokenReturnDto getVelogAuthToken(String authUrl) {
+    public void getVelogAuthToken(Member member, String authUrl) {
         int idx = authUrl.indexOf("=");
         String code = authUrl.substring(idx + 1);
 
@@ -62,7 +90,8 @@ public class AuthService {
         String accessToken = cookies.get(0).split(";")[0].substring(13);
         String refreshToken = cookies.get(1).split(";")[0].substring(14);
 
-        return new TempTokenReturnDto(accessToken, refreshToken);
+        member.setVelogTokens(accessToken, refreshToken);
+        memberRepository.save(member);
     }
 
     private String buildVelogQuery(String email) {

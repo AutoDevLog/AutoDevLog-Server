@@ -8,5 +8,4 @@ import lombok.Getter;
 public class VelogPostRequestDto {
     String title;
     String body;
-    String token;
 }
