@@ -18,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    @Operation(summary = "우리 서비스 로그인", description = "우리 서비스에 로그인 합니다. 계정이 존재하지 않으면 회원가입 처리합니다.")
+    @Operation(summary = "우리 서비스 로그인", description = "[개발 진행중] 우리 서비스에 로그인 합니다. 계정이 존재하지 않으면 회원가입 처리합니다.")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
         LoginResponseDto loginResponseDto = authService.login(loginRequestDto);
         return ResponseEntity.ok(loginResponseDto);

@@ -1,5 +1,7 @@
 package com.server.autodevlog.auth.service;
 
+import com.server.autodevlog.auth.dto.LoginRequestDto;
+import com.server.autodevlog.auth.dto.LoginResponseDto;
 import com.server.autodevlog.auth.dto.TempTokenReturnDto;
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
@@ -15,6 +17,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+        return new LoginResponseDto();
+    }
+
     public void sendVelogEmail(String email) {
         String query = buildVelogQuery(email);
 
