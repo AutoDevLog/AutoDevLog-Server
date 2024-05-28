@@ -1,8 +1,6 @@
 package com.server.autodevlog.auth.controller;
 
-import com.server.autodevlog.auth.dto.TempTokenReturnDto;
-import com.server.autodevlog.auth.dto.VelogEmailRequestDto;
-import com.server.autodevlog.auth.dto.VelogUrlRequestDto;
+import com.server.autodevlog.auth.dto.*;
 import com.server.autodevlog.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
+
+    @PostMapping("/login")
+    @Operation(summary = "우리 서비스 로그인", description = "[개발 진행중] 우리 서비스에 로그인 합니다. 계정이 존재하지 않으면 회원가입 처리합니다.")
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        LoginResponseDto loginResponseDto = authService.login(loginRequestDto);
+        return ResponseEntity.ok(loginResponseDto);
+    }
 
     @PostMapping("/link-velog-1")
     @Operation(summary = "벨로그 연동 이메일 받기", description = "우리 서비스 로그인 구현이 끝나면 header에 토큰을 넣도록 할 예정입니다.")
