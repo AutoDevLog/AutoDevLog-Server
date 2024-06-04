@@ -2,7 +2,6 @@ package com.server.autodevlog.auth.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.server.autodevlog.auth.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
+
+import static com.server.autodevlog.auth.service.JwtString.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,22 +27,18 @@ public class JwtService {
     @Value("${security.jwt.refresh.header}")
     private String refreshHeader;
 
-    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
-    private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String UUID_CLAIM = "uuid";
-    private static final String BEARER = "Bearer ";
-    private final int accessTokenExpirationPeriod = 3600000;
-    private final int refreshTokenExpirationPeriod = 1209600000;
-    private final MemberRepository memberRepository;
-    private final CustomUserDetailsService customUserDetailsService;
+    @Value("${security.jwt.access.expire-length}")
+    private String accessTokenExpirationPeriod;
 
+    @Value("${security.jwt.refresh.expire-length}")
+    private String refreshTokenExpirationPeriod;
 
     public String createAccessToken(String userId) {
         try {
             Date now = new Date();
             return JWT.create()
                     .withSubject(ACCESS_TOKEN_SUBJECT)
-                    .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
+                    .withExpiresAt(new Date(now.getTime() + Long.parseLong(accessTokenExpirationPeriod)))
                     .withClaim(UUID_CLAIM, userId)
                     .sign(Algorithm.HMAC512(this.secretKey));
         } catch (Exception e) {
@@ -57,7 +54,7 @@ public class JwtService {
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withClaim(UUID_CLAIM, userId)
-                .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
+                .withExpiresAt(new Date(now.getTime() + Long.parseLong(refreshTokenExpirationPeriod)))
                 .sign(Algorithm.HMAC512(this.secretKey));
     }
 
