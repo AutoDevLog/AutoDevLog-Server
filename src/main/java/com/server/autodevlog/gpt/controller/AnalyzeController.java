@@ -52,8 +52,6 @@ public class AnalyzeController {
 
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);} //gpt api 무응답 예외 처리
 
-        System.out.println(response.getGptResponseMessage());
-
         // 유저 프롬프트 워드 임베딩 Request
         EmbedRequest embedRequest = EmbedRequest.builder()
                 .input(response.getGptResponseMessage())
