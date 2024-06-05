@@ -3,9 +3,14 @@ package com.server.autodevlog.gpt.controller;
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
 import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
+import com.server.autodevlog.gpt.domain.Article;
 import com.server.autodevlog.gpt.dto.*;
+import com.server.autodevlog.gpt.repository.ArticleRepository;
+import com.server.autodevlog.gpt.service.ArticleService;
 import com.server.autodevlog.gpt.service.CosineService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,9 +36,11 @@ public class GPTController {
 
     private final RestTemplate template;
     private final CosineService cosineService;
+    private final ArticleService articleService;
+
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
     @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
-    public ResponseEntity<UserResponseDto> chat(@RequestBody @Valid UserRequestDto dto){
+    public ResponseEntity<String> chat(@RequestBody @Valid UserRequestDto dto, HttpServletResponse httpServletResponse){
 
         ChatGptRequest request = ChatGptRequest.builder() // gpt api request http 바디
                 .model(model)
@@ -43,7 +50,10 @@ public class GPTController {
 
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);} //gpt api 무응답 예외 처리
 
-        return ResponseEntity.ok(new UserResponseDto(response.getGptResponseMessage()));
+        String key = articleService.saveArticle(Article.builder().content(response.getGptResponseMessage()).build()); // 레디스 생성 게시글 저장
+
+        httpServletResponse.addCookie(new Cookie("article-hashcode",key)); // 쿠키에 레디스 해쉬값 저장
+        return ResponseEntity.ok(articleService.findArticle(key).getContent()); //  생성된 게시글 + 헤더에 레디스 해시값 response
     }
 
     @PostMapping("/embed")
