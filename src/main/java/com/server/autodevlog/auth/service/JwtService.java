@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Optional;
 
-import static com.server.autodevlog.auth.service.JwtString.*;
+import static com.server.autodevlog.auth.service.JwtEnum.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +37,9 @@ public class JwtService {
         try {
             Date now = new Date();
             return JWT.create()
-                    .withSubject(ACCESS_TOKEN_SUBJECT)
+                    .withSubject(ACCESS_TOKEN_SUBJECT.getValue())
                     .withExpiresAt(new Date(now.getTime() + Long.parseLong(accessTokenExpirationPeriod)))
-                    .withClaim(UUID_CLAIM, userId)
+                    .withClaim(UUID_CLAIM.getValue(), userId)
                     .sign(Algorithm.HMAC512(this.secretKey));
         } catch (Exception e) {
             // 예외 처리
@@ -52,22 +52,22 @@ public class JwtService {
     public String createRefreshToken(String userId) {
         Date now = new Date();
         return JWT.create()
-                .withSubject(REFRESH_TOKEN_SUBJECT)
-                .withClaim(UUID_CLAIM, userId)
+                .withSubject(REFRESH_TOKEN_SUBJECT.getValue())
+                .withClaim(UUID_CLAIM.getValue(), userId)
                 .withExpiresAt(new Date(now.getTime() + Long.parseLong(refreshTokenExpirationPeriod)))
                 .sign(Algorithm.HMAC512(this.secretKey));
     }
 
     public Optional<String> extractAccessToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(accessHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+                .filter(refreshToken -> refreshToken.startsWith(BEARER.getValue()))
+                .map(refreshToken -> refreshToken.replace(BEARER.getValue(), ""));
     }
 
     public Optional<String> extractRefreshToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(refreshHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+                .filter(refreshToken -> refreshToken.startsWith(BEARER.getValue()))
+                .map(refreshToken -> refreshToken.replace(BEARER.getValue(), ""));
     }
 
     public boolean isTokenValid(String token) {
@@ -87,7 +87,7 @@ public class JwtService {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build() // 반환된 빌더로 JWT verifier 생성
                     .verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
-                    .getClaim(UUID_CLAIM)
+                    .getClaim(UUID_CLAIM.getValue())
                     .asString());
         } catch (Exception e) {
             log.error("액세스 토큰이 유효하지 않습니다.");
