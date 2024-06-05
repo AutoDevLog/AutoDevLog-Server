@@ -33,7 +33,7 @@ public class GPTController {
     private final CosineService cosineService;
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
     @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
-    public ResponseEntity<String> chat(@RequestBody @Valid UserRequestDto dto){
+    public ResponseEntity<UserResponseDto> chat(@RequestBody @Valid UserRequestDto dto){
 
         ChatGptRequest request = ChatGptRequest.builder() // gpt api request http 바디
                 .model(model)
@@ -43,7 +43,7 @@ public class GPTController {
 
         if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);} //gpt api 무응답 예외 처리
 
-        return ResponseEntity.ok(response.getGptResponseMessage());
+        return ResponseEntity.ok(new UserResponseDto(response.getGptResponseMessage()));
     }
 
     @PostMapping("/embed")
