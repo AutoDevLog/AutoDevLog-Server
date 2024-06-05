@@ -1,5 +1,6 @@
 package com.server.autodevlog.blog.service;
 
+import com.server.autodevlog.auth.domain.Member;
 import com.server.autodevlog.blog.dto.VelogPostRequestDto;
 import com.server.autodevlog.blog.dto.VelogPostResponseDto;
 import com.server.autodevlog.global.exception.CustomException;
@@ -16,7 +17,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BlogService {
-    public void postToVelog(VelogPostRequestDto velogPostRequestDto) throws CustomException {
+    public void postToVelog(Member member, VelogPostRequestDto velogPostRequestDto) throws CustomException {
+
         String title = velogPostRequestDto.getTitle();
         String body = velogPostRequestDto.getBody();
 
@@ -29,7 +31,7 @@ public class BlogService {
         ResponseEntity<VelogPostResponseDto> response = webClient.post()
                 .uri("/graphql")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Cookie", "access_token=" + velogPostRequestDto.getToken() + ";")
+                .header("Cookie", "access_token=" + member.getVelogAccessToken() + ";")
                 .bodyValue(query)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, res -> {
