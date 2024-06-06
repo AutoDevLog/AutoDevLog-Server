@@ -63,7 +63,7 @@ public class BlogService {
 
     private String buildVelogQuery(VelogPostRequestDto velogPostRequestDto) {
         String title = velogPostRequestDto.getTitle();
-        String body = velogPostRequestDto.getBody();
+        String body = velogPostRequestDto.getBody().replace("\n", "\\n").replace("\"", "'");
 
         return "{\"operationName\":\"WritePost\",\"variables\"" +
                 ":{\"title\":\"" + title + "\",\"body\":\"" + body
