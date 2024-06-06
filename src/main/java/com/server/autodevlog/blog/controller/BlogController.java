@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/blog")
 public class BlogController {
     private final BlogService blogService;
-    private final GPTArticleService gptArticleService; // 테스트 이후 디펜던시 구조를 바꿀 예정입니다. 이친구가 여깄으면 안된다는 점 잘 인지하고 있습니다.
+    private final GPTArticleService gptArticleService;
 
     @PostMapping("/velog-post")
     @Operation(summary = "벨로그 포스팅 API", description = "만약 서버에 저장된 벨로그 토큰이 만료되었다면 서버단에서 토큰 업데이트 후 재시도하도록 구현 하였습니다.")
