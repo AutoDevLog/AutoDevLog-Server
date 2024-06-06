@@ -1,12 +1,11 @@
-package com.server.autodevlog.blog.dto;
+package com.server.autodevlog.gpt.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ArticleUploadRequestDto {
+public class GPTArticleUploadRequestDto {
     private String title;
     private String hashCode;
 }
