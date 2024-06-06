@@ -34,7 +34,7 @@ public class GPTController {
 
     private final RestTemplate template;
     private final CosineService cosineService;
-    private final GPTArticleService GPTArticleService;
+    private final GPTArticleService gptArticleService;
 
     @PostMapping("/request") // 유저 프롬프트 -> gpt api
     @Operation(summary = "GPT-API 호출 API",description = "Request Body 담겨 있는 issue, inference, solution을 gpt api에 전달하여 응답값을 String 반환")
@@ -48,10 +48,10 @@ public class GPTController {
 
         if(gptResponse==null||gptResponse.isEmptyChoiceList()){throw new CustomException(ErrorCode.GPT_API_ERROR);} //gpt api 무응답 예외 처리
 
-        String gptArticleKey = GPTArticleService.saveArticle(GPTArticle.builder().content(gptResponse.getGptResponseMessage()).build()); // 레디스 생성 게시글 저장
+        String gptArticleKey = gptArticleService.saveArticle(GPTArticle.builder().content(gptResponse.getGptResponseMessage()).build()); // 레디스 생성 게시글 저장
 
         httpServletResponse.addCookie(new Cookie("article-hashcode",gptArticleKey)); // 쿠키에 레디스 해쉬값 저장
-        return ResponseEntity.ok(GPTArticleService.findArticleContent(gptArticleKey)); //  생성된 게시글 + 헤더에 레디스 해시값 response
+        return ResponseEntity.ok(gptArticleService.findArticleContent(gptArticleKey)); //  생성된 게시글 + 헤더에 레디스 해시값 response
     }
 
     @PostMapping("/embed")
