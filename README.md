@@ -28,6 +28,8 @@
 ![게시글 업로드](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/058d2993-9b98-48f7-b10c-bf1c8c34622c)
 <4. 벨로드 업로드>
 ![벨로그 업로드](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/07ae798c-a9a6-4cd1-80f4-657023f9942f)
+[게시글 링크](https://velog.io/@tech-blog/SpringBoot-NoArgsConstructor-%EC%A0%91%EA%B7%BC-%EB%A0%88%EB%B2%A8)
+
 - - -
 ## 기술 목록
 - SpringBoot 3
