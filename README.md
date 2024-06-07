@@ -7,8 +7,8 @@
 ‘AutoDevLog’ 는 키워드를 기반으로 LLM(Large Language Model) 을 통해 블로그 게시글 작성 웹서비스 입니다. 다양한 블로그 게시글 중에서도 트러블 슈팅(Trouble Shooting) 게시글을 작성하는 가능을 제공합니다.
 
 ## 팀원 소개
-| 국혜경                                                   | 이승우                                   | 이종인                                                 |
-|----------------------------------------------------------|------------------------------------------|--------------------------------------------------------|
+| 국혜경                                                          | 이승우                                   | 이종인                                                 |
+|-----------------------------------------------------------------|------------------------------------------|--------------------------------------------------------|
 | - 담당기능<br>1. Velog  API 연동<br>2. AutoDevLog 로그인 로직 구현 | -담당기능<br>1.워드 임베딩 <br>2. 코사인 유사도 검사 | - 담당기능<br>1. OpenAI API 연동<br>2. 프롬프트 엔지니어링 |
 | <a href="https://github.com/k0000k"> <p align="center"> <img src="https://avatars.githubusercontent.com/u/84006880?v=4"> </p></a> |  <a href="https://github.com/ls-rai"><p align="center"><img src="https://avatars.githubusercontent.com/u/127829709?v=4" width="50%" height="50%"/> </p></a>  |  <a href="https://github.com/bell-person-ii"><p align="center"> <img src="https://avatars.githubusercontent.com/u/76873740?v=4"  width="50%" height="50%"/> </p> </a> |
 - - -
