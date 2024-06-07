@@ -18,13 +18,13 @@
 2. 생성된 게시글에 사용자가 제목을 붙이고, 업로드를 승인하면, 사용자의 velog 계정에 게시물이 업로드 됩니다.
 
 <1. 키워드 입력>
-
+![키워드 입력](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/67dc7ce3-bb13-40fc-8c6c-42bed7f88b0a)
 <2. 키워드 기반 게시글 생성>
-
+![키워드기반 게시글 생성](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/30d05e3d-47fc-4928-bb6f-b17904b3752e)
 <3. 게시글 전송>
-
+![게시글 업로드](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/058d2993-9b98-48f7-b10c-bf1c8c34622c)
 <4. 벨로드 업로드>
-
+![벨로그 업로드](https://github.com/AutoDevLog/AutoDevLog-Server/assets/76873740/07ae798c-a9a6-4cd1-80f4-657023f9942f)
 - - -
 ## 기술 목록
 - SpringBoot 3
