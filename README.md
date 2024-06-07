@@ -1,5 +1,3 @@
-# 
-#AutoDevLog-Server
 
 # AutoDevLog-Server
 - - -
