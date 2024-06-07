@@ -10,7 +10,7 @@
 | 국혜경                                                   | 이승우                                   | 이종인                                                 |
 |-------------------------------------------------------|---------------------------------------|-----------------------------------------------------|
 | - 담당기능<br>1. Velog  API 연동<br>2. AutoDevLog 로그인 로직 구현 | -담당기능<br>1.워드 임베딩 <br>2. 코사인 유사도 검사   | - 담당기능<br>1. OpenAI API 연동<br>2. 프롬프트 엔지니어링         |
-| <img src="https://avatars.githubusercontent.com/u/84006880?v=4" alt="[k0000k](https://github.com/k0000k)"> | <img src="https://avatars.githubusercontent.com/u/127829709?v=4" width="50%" height="50%" alt="[Is-rain](https://github.com/ls-rain)">  | ![프로필3](https://avatars.githubusercontent.com/u/76873740?v=4){: width="25%" height="25%"} *[bell-person-ii](https://github.com/bell-person-ii)* |
+| <img src="https://avatars.githubusercontent.com/u/84006880?v=4" alt="[k0000k](https://github.com/k0000k)"> | <img src="https://avatars.githubusercontent.com/u/127829709?v=4" width="50%" height="50%" alt="[Is-rain](https://github.com/ls-rain)">  | <img src="https://avatars.githubusercontent.com/u/76873740?v=4"  width="50%" height="50%" alt="[bell-person-ii](https://github.com/bell-person-ii)"> |
 - - -
 ## 서비스 소개
 ### 1. 서비스 로직
