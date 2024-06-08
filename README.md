@@ -11,6 +11,13 @@
 | [<img src="https://avatars.githubusercontent.com/u/84006880?v=4" width="200" height="200">](https://github.com/k0000k) | [<img src="https://avatars.githubusercontent.com/u/127829709?v=4" width="200" height="200">](https://github.com/ls-rain) | [<img src="https://avatars.githubusercontent.com/u/76873740?v=4" width="200" height="200">](https://github.com/bell-person-ii) | [<img src="https://avatars.githubusercontent.com/u/146945828?v=4" width="200" height="200">](https://github.com/DevDAN09) |
 | <div align="center"><a href="https://github.com/k0000k">k0000k</a></div> | <div align="center"><a href="https://github.com/ls-rain">Is-rain</a></div> | <div align="center"><a href="https://github.com/bell-person-ii">bell-person-ii</a></div> | <div align="center"><a href="https://github.com/DevDAN09">DevDAN09</a></div> |
 
+| <div align="center">국혜경</div> | <div align="center">이승우</div> | <div align="center">이종인</div> |
+| :--------------------------- | :-------------------------- | :-------------------------- |
+| **담당기능**<br>1. Velog API 연동 및 배포<br>2. AutoDevLog 로그인 로직 구현 | **담당기능**<br>1. 워드 임베딩<br>2. 코사인 유사도 검사 | **담당기능**<br>1. OpenAI API 연동<br>2. 프롬프트 엔지니어링 |
+| [<img src="https://avatars.githubusercontent.com/u/84006880?v=4" width="200" height="200">](https://github.com/k0000k) | [<img src="https://avatars.githubusercontent.com/u/127829709?v=4" width="200" height="200">](https://github.com/ls-rain) | [<img src="https://avatars.githubusercontent.com/u/76873740?v=4" width="200" height="200">](https://github.com/bell-person-ii) |
+| <div align="center"><a href="https://github.com/k0000k">k0000k</a></div> | <div align="center"><a href="https://github.com/ls-rain">Is-rain</a></div> | <div align="center"><a href="https://github.com/bell-person-ii">bell-person-ii</a></div> |
+
+
 - - -
 ## 서비스 링크
 [AutoDevLog](https://auto-dev-log-client-vercel.vercel.app/)
