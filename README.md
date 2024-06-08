@@ -13,7 +13,7 @@
 
 - - -
 ## 서비스 링크
-![AutoDevLog](https://auto-dev-log-client-vercel.vercel.app/)
+[AutoDevLog](https://auto-dev-log-client-vercel.vercel.app/)
 
 - - -
 ## 서비스 소개
