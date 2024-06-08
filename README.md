@@ -39,9 +39,7 @@
 - Spring Webflux
 - Redis
 - OpenAI API
-- React
 - AWS
-- Vercel
 - - -
 ### 기대효과
 - 핵심 키워드 만으로 게시글을 생성하여 기술블로그를 운영할 수 있다.
