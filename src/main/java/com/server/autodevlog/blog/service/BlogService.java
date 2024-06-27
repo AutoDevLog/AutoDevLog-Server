@@ -46,7 +46,11 @@ public class BlogService {
                     throw new CustomException(ErrorCode.VELOG_POSTING_ERROR); // Retry 될 수 있도록 예외 Throw
                 });
 
-        Map<Object, Object> responseBody = response.getBody().getData().getWritePost();
+        return makePostResult(response.getBody());
+    }
+
+    private PostingResultDto makePostResult(VelogPostResponseDto velogPostResponseDto) {
+        Map<Object, Object> responseBody = velogPostResponseDto.getData().getWritePost();
         Map<String, String> userMap = (Map<String, String>) responseBody.get("user");
 
         String userName = userMap.get("username");
@@ -54,7 +58,7 @@ public class BlogService {
 
         String createdUrl = "https://velog.io/@" + userName + "/" + slug;
 
-        return new PostingResultDto((createdUrl));
+        return new PostingResultDto(createdUrl);
     }
 
     private ResponseEntity<VelogPostResponseDto> sendPostRequest(WebClient webClient, String query, String cookie) {
