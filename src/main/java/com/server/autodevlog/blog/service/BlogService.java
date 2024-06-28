@@ -64,11 +64,11 @@ public class BlogService {
     private String buildVelogQuery(VelogPostRequestDto velogPostRequestDto) {
         String title = velogPostRequestDto.getTitle();
         String body = velogPostRequestDto.getBody().replace("\n", "\\n").replace("\"", "'");
-
+        String shortDescription = body.substring(body.indexOf("#이슈 정의"),20)+"..."; // '#이슈 정의' 키워드 뒤부터 인덱스 20 전까지를 short_description 으로 지정
         return "{\"operationName\":\"WritePost\",\"variables\"" +
                 ":{\"title\":\"" + title + "\",\"body\":\"" + body
                 + "\",\"tags\":[],\"is_markdown\":true,\"is_temp\":false,\"is_private\":false,\"url_slug\":\""
-                + title + "\",\"thumbnail\":null,\"meta\":{\"short_description\":\"" + body + "\"}," +
+                + title + "\",\"thumbnail\":null,\"meta\":{\"short_description\":\"" + shortDescription + "\"}," +
                 "\"series_id\":null,\"token\":null},\"query\":\"mutation " +
                 "WritePost($title: String, $body: String, $tags: [String], $is_markdown: Boolean, $is_temp: Boolean, $is_private: Boolean, $url_slug: String, $thumbnail: String, $meta: JSON, $series_id: ID, $token: String) " +
                 "{\\n  writePost(title: $title, body: $body, tags: $tags, is_markdown: $is_markdown, is_temp: $is_temp, is_private: $is_private, url_slug: $url_slug, thumbnail: $thumbnail, meta: $meta, series_id: $series_id, token: $token) " +
