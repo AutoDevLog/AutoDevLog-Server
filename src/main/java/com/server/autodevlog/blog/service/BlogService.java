@@ -2,6 +2,7 @@ package com.server.autodevlog.blog.service;
 
 import com.server.autodevlog.auth.domain.Member;
 import com.server.autodevlog.auth.repository.MemberRepository;
+import com.server.autodevlog.blog.dto.PostingResultDto;
 import com.server.autodevlog.blog.dto.VelogPostRequestDto;
 import com.server.autodevlog.blog.dto.VelogPostResponseDto;
 import com.server.autodevlog.global.exception.CustomException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,7 +27,7 @@ public class BlogService {
     private final MemberRepository memberRepository;
 
     @Retryable(maxAttempts = 2, retryFor = CustomException.class)
-    public void postToVelog(Member member, VelogPostRequestDto velogPostRequestDto) throws CustomException {
+    public PostingResultDto postToVelog(Member member, VelogPostRequestDto velogPostRequestDto) throws CustomException {
 
         String query = buildVelogQuery(velogPostRequestDto);
         String cookie = buildCookieString(member);
@@ -43,6 +45,20 @@ public class BlogService {
                     updateVelogTokens(member, response.getHeaders()); // Token 업데이트
                     throw new CustomException(ErrorCode.VELOG_POSTING_ERROR); // Retry 될 수 있도록 예외 Throw
                 });
+
+        return makePostResult(response.getBody());
+    }
+
+    private PostingResultDto makePostResult(VelogPostResponseDto velogPostResponseDto) {
+        Map<Object, Object> responseBody = velogPostResponseDto.getData().getWritePost();
+        Map<String, String> userMap = (Map<String, String>) responseBody.get("user");
+
+        String userName = userMap.get("username");
+        String slug = responseBody.get("url_slug").toString();
+
+        String createdUrl = "https://velog.io/@" + userName + "/" + slug;
+
+        return new PostingResultDto(createdUrl);
     }
 
     private ResponseEntity<VelogPostResponseDto> sendPostRequest(WebClient webClient, String query, String cookie) {

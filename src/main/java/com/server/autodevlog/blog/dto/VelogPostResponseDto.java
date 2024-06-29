@@ -12,4 +12,5 @@ public class VelogPostResponseDto {
     public static class VelogResponseData {
         Map<Object, Object> writePost;
     }
+
 }
