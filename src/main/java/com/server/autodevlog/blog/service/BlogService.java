@@ -64,7 +64,7 @@ public class BlogService {
     private String buildVelogQuery(VelogPostRequestDto velogPostRequestDto) {
         String title = velogPostRequestDto.getTitle();
         String body = velogPostRequestDto.getBody().replace("\n", "\\n").replace("\"", "'");
-        String shortDescription = body.substring(7,20)+"..."; // '#이슈 정의' 키워드 뒤부터 인덱스 20 전까지를 short_description 으로 지정
+        String shortDescription = body.substring(7,20)+"..."; // '#이슈 정의' 키워드 뒤부터 인덱스 20 전까지를 short_description 지정
         return "{\"operationName\":\"WritePost\",\"variables\"" +
                 ":{\"title\":\"" + title + "\",\"body\":\"" + body
                 + "\",\"tags\":[],\"is_markdown\":true,\"is_temp\":false,\"is_private\":false,\"url_slug\":\""
