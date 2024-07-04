@@ -8,6 +8,8 @@ import com.server.autodevlog.gpt.dto.*;
 import com.server.autodevlog.gpt.service.GPTArticleService;
 import com.server.autodevlog.gpt.service.CosineService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -72,5 +74,17 @@ public class GPTController {
         double cosineSimilarity = cosineService.calculateCosineSimilarity(cosineRequestDTO.getVector1(), cosineRequestDTO.getVector2());
         CosineResponseDTO cosineResponseDTO = CosineResponseDTO.builder().cosineSimilarity(cosineSimilarity).build();
         return ResponseEntity.ok(cosineResponseDTO);
+    }
+
+    @PatchMapping("/request/edit")
+    @Operation(summary = "생성 글 수정 API", description = "Request Body에 content에 해당하는 수정사항으로 레디스 해쉬값을 갱신합니다.")
+    @Parameters({
+            @Parameter(name = "content", description = "이스케이프 처리된 수정글")
+    })
+    public ResponseEntity<String> edit(@RequestBody @Valid EditRequestDTO dto,
+                                       HttpServletResponse httpServletResponse){
+        String gptArticleKey = gptArticleService.saveArticle(GPTArticle.builder().content(dto.getContent()).build());
+        httpServletResponse.addCookie(new Cookie("article-hashcode", gptArticleKey));
+        return ResponseEntity.ok(gptArticleService.findArticleContent(gptArticleKey));
     }
 }
