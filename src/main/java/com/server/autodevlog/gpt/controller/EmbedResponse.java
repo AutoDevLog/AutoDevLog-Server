@@ -1,4 +1,4 @@
-package com.server.autodevlog.gpt.dto;
+package com.server.autodevlog.gpt.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

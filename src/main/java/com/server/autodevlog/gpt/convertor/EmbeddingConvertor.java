@@ -1,6 +1,6 @@
 package com.server.autodevlog.gpt.convertor;
 
-import com.server.autodevlog.gpt.dto.EmbedResponse;
+import com.server.autodevlog.gpt.controller.EmbedResponse;
 import com.server.autodevlog.gpt.dto.Word2VecResponseDTO;
 
 import java.util.List;
