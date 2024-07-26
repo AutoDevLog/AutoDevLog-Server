@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class GPTArticleUploadRequestDto {
+public class GptArticleUploadRequestDto {
     private String title;
     private String hashCode;
 }

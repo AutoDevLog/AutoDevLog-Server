@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmbedResponse {
+public class EmbedResponseDto {
     List<DataItem> data;
 
     @Getter

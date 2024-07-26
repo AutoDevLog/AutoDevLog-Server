@@ -3,11 +3,12 @@ package com.server.autodevlog.measurement.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EmbedRequest {
-    String input;
-    String model;
+public class CosineResponseDto {
+    Double cosineSimilarity;
 }
