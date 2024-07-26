@@ -57,24 +57,4 @@ public class GPTController {
         httpServletResponse.addCookie(new Cookie("article-hashcode",gptArticleKey)); // 쿠키에 레디스 해쉬값 저장
         return ResponseEntity.ok(gptArticleService.findArticleContent(gptArticleKey)); //  생성된 게시글 + 헤더에 레디스 해시값 response
     }
-
-    @PostMapping("/embed")
-    @Operation(summary = "워드 임베딩 API", description = "Body에 블로그 글을 넣어주세요. 토큰으로 끊어서 벡터리스트를 반환합니다.")
-    public ResponseEntity<Word2VecResponseDTO> embed(@RequestBody Word2VecRequestDTO userRequestDto){
-        EmbedRequest request = EmbedRequest.builder()
-                .input(userRequestDto.getUserPrompt())
-                .model(embedModel)
-                .build();
-        EmbedResponse response = template.postForObject(embedUrl, request, EmbedResponse.class);
-        if(response==null||response.isEmptyChoiceList()){throw new CustomException(ErrorCode.EMBED_API_ERROR);} //embed api 무응답 예외 처리
-        return ResponseEntity.ok(EmbeddingConvertor.toWord2VecResponseDTO(response));
-    }
-
-    @PostMapping("/cosine")
-    @Operation(summary = "코사인 유사도 API", description = "Body에 비교하는 벡터리스트들을 넣어주세요. 코사인유사도를 반환합니다.")
-    public ResponseEntity<CosineResponseDTO> cosine(@RequestBody CosineRequestDTO cosineRequestDTO){
-        double cosineSimilarity = cosineService.calculateCosineSimilarity(cosineRequestDTO.getVector1(), cosineRequestDTO.getVector2());
-        CosineResponseDTO cosineResponseDTO = CosineResponseDTO.builder().cosineSimilarity(cosineSimilarity).build();
-        return ResponseEntity.ok(cosineResponseDTO);
-    }
 }
