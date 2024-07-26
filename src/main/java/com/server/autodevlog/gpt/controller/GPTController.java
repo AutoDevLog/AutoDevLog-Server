@@ -2,15 +2,10 @@ package com.server.autodevlog.gpt.controller;
 
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
-import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.domain.GPTArticle;
 import com.server.autodevlog.gpt.dto.*;
 import com.server.autodevlog.gpt.service.GPTArticleService;
-import com.server.autodevlog.measurement.dto.EmbedResponse;
 import com.server.autodevlog.measurement.service.CosineService;
-import com.server.autodevlog.measurement.dto.CosineRequestDTO;
-import com.server.autodevlog.measurement.dto.CosineResponseDTO;
-import com.server.autodevlog.measurement.dto.EmbedRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;

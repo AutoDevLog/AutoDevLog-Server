@@ -1,7 +1,7 @@
-package com.server.autodevlog.gpt.convertor;
+package com.server.autodevlog.measurement.convertor;
 
 import com.server.autodevlog.measurement.dto.EmbedResponse;
-import com.server.autodevlog.gpt.dto.Word2VecResponseDTO;
+import com.server.autodevlog.measurement.dto.Word2VecResponseDTO;
 
 import java.util.List;
 

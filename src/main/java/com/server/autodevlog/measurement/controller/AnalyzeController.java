@@ -1,7 +1,7 @@
 package com.server.autodevlog.measurement.controller;
 
 import com.server.autodevlog.measurement.dto.EmbedResponse;
-import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
+import com.server.autodevlog.measurement.convertor.EmbeddingConvertor;
 import com.server.autodevlog.measurement.service.CosineService;
 import com.server.autodevlog.measurement.dto.*;
 import com.server.autodevlog.measurement.service.MeasurementService;

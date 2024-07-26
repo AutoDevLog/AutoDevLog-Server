@@ -1,4 +1,4 @@
-package com.server.autodevlog.gpt.dto;
+package com.server.autodevlog.measurement.dto;
 
 import lombok.Builder;
 import lombok.Getter;
