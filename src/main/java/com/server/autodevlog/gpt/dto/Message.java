@@ -11,4 +11,12 @@ public class Message {
     private String role;
     private String content;
 
+    public static Message createSystemMessage(String format){
+        return new Message("system",format);
+    }
+
+    public static Message createUserMessage(String format,String content){
+        return new Message("user",format + content);
+    }
+
 }
