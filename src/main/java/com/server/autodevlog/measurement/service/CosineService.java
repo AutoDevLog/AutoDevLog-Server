@@ -1,4 +1,4 @@
-package com.server.autodevlog.gpt.service;
+package com.server.autodevlog.measurement.service;
 
 import org.springframework.stereotype.Service;
 
