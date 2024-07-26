@@ -6,6 +6,7 @@ import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.gpt.domain.GPTArticle;
 import com.server.autodevlog.gpt.dto.*;
 import com.server.autodevlog.gpt.service.GPTArticleService;
+import com.server.autodevlog.measurement.dto.EmbedResponse;
 import com.server.autodevlog.measurement.service.CosineService;
 import com.server.autodevlog.measurement.dto.CosineRequestDTO;
 import com.server.autodevlog.measurement.dto.CosineResponseDTO;

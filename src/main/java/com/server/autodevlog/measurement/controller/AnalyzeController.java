@@ -1,8 +1,6 @@
 package com.server.autodevlog.measurement.controller;
 
-import com.server.autodevlog.global.exception.CustomException;
-import com.server.autodevlog.global.exception.ErrorCode;
-import com.server.autodevlog.gpt.controller.EmbedResponse;
+import com.server.autodevlog.measurement.dto.EmbedResponse;
 import com.server.autodevlog.gpt.convertor.EmbeddingConvertor;
 import com.server.autodevlog.measurement.service.CosineService;
 import com.server.autodevlog.measurement.dto.*;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

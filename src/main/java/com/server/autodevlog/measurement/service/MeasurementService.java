@@ -2,7 +2,7 @@ package com.server.autodevlog.measurement.service;
 
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
-import com.server.autodevlog.gpt.controller.EmbedResponse;
+import com.server.autodevlog.measurement.dto.EmbedResponse;
 import com.server.autodevlog.measurement.dto.EmbedRequest;
 import com.server.autodevlog.measurement.dto.MeasurementCompareGptResponse;
 import com.server.autodevlog.measurement.dto.MeasurementGptRequestDto;
