@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ChatGptRequest {
+public class ChatGptRequestDto {
     private String model;
     private List<Message> messages = new ArrayList<>();
     private final double temperature = 0.2;
 
     @Builder
-    public ChatGptRequest(String model, UserRequestDto dto) {
+    public ChatGptRequestDto(String model, UserRequestDto dto) {
         this.model = model;
         messages.add(new Message("system","language : Korean"));
         messages.add(new Message("system","Responding in Text format"));

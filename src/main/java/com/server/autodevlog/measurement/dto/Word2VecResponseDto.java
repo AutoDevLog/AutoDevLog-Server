@@ -1,11 +1,13 @@
 package com.server.autodevlog.measurement.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
 
+@Builder
 @Getter
-public class CosineRequestDTO {
-    List<Double> vector1;
-    List<Double> vector2;
+public class Word2VecResponseDto {
+    List<Double> vectorList;
+
 }

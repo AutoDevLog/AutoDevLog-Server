@@ -7,13 +7,13 @@ import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @RedisHash(value = "GPT-article")
-public class GPTArticle {
+public class GptArticle {
     @Id
     private String id;
     private String content;
 
     @Builder
-    public GPTArticle(String content){
+    public GptArticle(String content){
         this.content = content;
     }
 }

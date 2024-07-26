@@ -1,5 +1,7 @@
-package com.server.autodevlog.gpt.dto;
+package com.server.autodevlog.measurement.dto;
 
+import com.server.autodevlog.gpt.dto.ChatGptResponseDto;
+import com.server.autodevlog.gpt.dto.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +11,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class ChatGptResponse {
-
-    private List<Choice> choices = new ArrayList<>();
+public class MeasurementCompareGptResponseDto {
+    private List<ChatGptResponseDto.Choice> choices = new ArrayList<>();
 
     @Getter
     @NoArgsConstructor

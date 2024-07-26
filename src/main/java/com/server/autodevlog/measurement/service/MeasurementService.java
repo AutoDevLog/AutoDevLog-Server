@@ -2,9 +2,9 @@ package com.server.autodevlog.measurement.service;
 
 import com.server.autodevlog.global.exception.CustomException;
 import com.server.autodevlog.global.exception.ErrorCode;
-import com.server.autodevlog.measurement.dto.EmbedResponse;
-import com.server.autodevlog.measurement.dto.EmbedRequest;
-import com.server.autodevlog.measurement.dto.MeasurementCompareGptResponse;
+import com.server.autodevlog.measurement.dto.EmbedResponseDto;
+import com.server.autodevlog.measurement.dto.EmbedRequestDto;
+import com.server.autodevlog.measurement.dto.MeasurementCompareGptResponseDto;
 import com.server.autodevlog.measurement.dto.MeasurementGptRequestDto;
 import com.server.autodevlog.measurement.dto.MeasurementRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -29,41 +29,41 @@ public class MeasurementService {
 
     private final RestTemplate template;
 
-    public EmbedResponse keywordGeneratedArticleEmbed(MeasurementRequestDto request){
+    public EmbedResponseDto keywordGeneratedArticleEmbed(MeasurementRequestDto request){
         MeasurementGptRequestDto gptRequestDto = MeasurementGptRequestDto.builder()
                 .model(model)
                 .dto(request)
                 .build();
         // 키워드 기반 gpt-api article 생성 request
-        MeasurementCompareGptResponse compareGptResponse = template.postForObject(url,gptRequestDto,MeasurementCompareGptResponse.class);
+        MeasurementCompareGptResponseDto compareGptResponse = template.postForObject(url,gptRequestDto, MeasurementCompareGptResponseDto.class);
 
         Optional.ofNullable(compareGptResponse.getChoices()) //gpt api 무응답 예외 처리
                 .orElseThrow(()-> new CustomException(ErrorCode.GPT_API_ERROR));
 
 
         // 키워드 기반 gpt-api article 임베딩 Request
-        EmbedRequest embedRequest = EmbedRequest.builder()
+        EmbedRequestDto embedRequestDto = EmbedRequestDto.builder()
                 .input(compareGptResponse.getGptResponseMessage())
                 .model(embedModel)
                 .build();
 
         // 키워드 기반 gpt-api article 임베딩 Response
-        EmbedResponse embedResponse = template.postForObject(embedUrl, embedRequest, EmbedResponse.class);
+        EmbedResponseDto embedResponseDto = template.postForObject(embedUrl, embedRequestDto, EmbedResponseDto.class);
 
-        Optional.ofNullable(embedResponse.getData()) //embed api 무응답 예외 처리
+        Optional.ofNullable(embedResponseDto.getData()) //embed api 무응답 예외 처리
                 .orElseThrow(()-> new CustomException(ErrorCode.EMBED_API_ERROR));
 
-        return embedResponse;
+        return embedResponseDto;
     }
 
-    public EmbedResponse compareTargetArticleEmbed(MeasurementRequestDto request){
-        EmbedRequest embedCompareTargetRequest = EmbedRequest.builder()
+    public EmbedResponseDto compareTargetArticleEmbed(MeasurementRequestDto request){
+        EmbedRequestDto embedCompareTargetRequest = EmbedRequestDto.builder()
                 .input(request.getCompareTarget())
                 .model(embedModel)
                 .build();
 
         // 대조 글 워드 임베딩 Response
-        EmbedResponse embedCompareTargetResponse = template.postForObject(embedUrl, embedCompareTargetRequest, EmbedResponse.class);
+        EmbedResponseDto embedCompareTargetResponse = template.postForObject(embedUrl, embedCompareTargetRequest, EmbedResponseDto.class);
 
         //embed api 무응답 예외 처리
         Optional.ofNullable(embedCompareTargetResponse.getData())
