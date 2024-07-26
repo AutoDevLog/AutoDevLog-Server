@@ -64,8 +64,8 @@ public class MeasurementService {
 
         // 대조 글 워드 임베딩 Response
         EmbedResponse embedCompareTargetResponse = template.postForObject(embedUrl, embedCompareTargetRequest, EmbedResponse.class);
-        //if(embedCompareTargetResponse==null||embedCompareTargetResponse.isEmptyChoiceList()){throw new CustomException(ErrorCode.EMBED_API_ERROR);} //embed api 무응답 예외 처리
 
+        //embed api 무응답 예외 처리
         Optional.ofNullable(embedCompareTargetResponse.getData())
                 .orElseThrow(()-> new CustomException(ErrorCode.EMBED_API_ERROR));
 
