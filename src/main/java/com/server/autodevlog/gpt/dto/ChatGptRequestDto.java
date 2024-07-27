@@ -31,7 +31,6 @@ public class ChatGptRequestDto {
         addSystemMessages();
         addSelfAskMessages();
         addUserMessages(dto);
-        System.out.println(this); // 테스트
     }
 
     private void addSystemMessages(){
@@ -50,11 +49,13 @@ public class ChatGptRequestDto {
     }
 
     private void addSelfAskMessages() {
-        String selfAskStart = "self-Ask Example :";
-        String selfAsk1 = "given issue: java,ArrayNPE, Q: Why does Java's ArrayNPE problem occur?";
-        String selfAskAnswer1 = "A: Java's ArrayNPE problem occurs when accessing an uninitialized ArrayList, etc.";
-        String selfAsk2 = "Q: Please provide example code for this issue.";
-        String selfAskAnswer2 = "A: ```java\n" +
+        final String selfAskStart = "Does it need follow up?";
+        final String selfAskStartAnswer = "yes.";
+        final String selfAskExample = "self-Ask Example: ";
+        final String selfAsk1 = "Q: Why does Java's ArrayNPE problem occur?";
+        final String selfAskAnswer1 = "A: NPE problems occur when accessing uninitialized fields. So Java's ArrayNPE problem occurs when accessing an uninitialized List field";
+        final String selfAsk2 = "Q: Please provide example code for this issue.";
+        final String selfAskAnswer2 = "A: ```java\n" +
                 "public class Example {\n" +
                 "    private ArrayList<String> list;\n" +
                 "\n" +
@@ -67,15 +68,13 @@ public class ChatGptRequestDto {
                 "        example.addItem(\"Hello\");\n" +
                 "    }\n" +
                 "}\n" +
-                "```";
-        String selfAsk3 = "given inference: List field not initialized, Q: What should I do to solve Java's ArrayNPE problem?";
-        String selfAskAnswer3 = "A: Java's ArrayNPE occurs when accessing an uninitialized List field.";
-
-        String selfAsk4 = "given solution: This can be solved by initializing the List field, Q: How to solve ArrayNPE issue in Java?";
-        String selfAskAnswer4 = "A: When defining a class, the List field requires initialization measures such as new ArrayList<>() at the time of instance creation.";
-
-        String selfAsk5= "Q: Please provide code that applies the solution to the example code.";
-        String selfAskAnswer5 = "A: ```java\n" +
+                "```"
+                +"\n" +
+                "The 'ArrayList<String> list' field has been declared but not initialized.";
+        final String selfAsk3 = "Q: How should I modify the code in the example above to resolve the ArrayNPE issue?";
+        final String selfAskAnswer3 = "A: Java's ArrayNPE occurs when accessing an uninitialized List field." +"This can be solved by initializing the List field, which is an uninitialized field, with an instance of List's implementation class like 'ArrayList'";
+        final String selfAsk4= "Q: Please provide code that applies the solution to the example code.";
+        final String selfAskAnswer4 = "A: ```java\n" +
                 "import java.util.ArrayList;\n" +
                 "\n" +
                 "public class Example {\n" +
@@ -90,10 +89,12 @@ public class ChatGptRequestDto {
                 "        example.addItem(\"Hello\");\n" +
                 "    }\n" +
                 "}\n" +
-                "```";
-        String selfAskEnd = "self-Ask Example End. Please create a response according to the format for the issue, inference, and solution presented in this logical structure.";
+                "```\n" + "As in the example above, you can prevent the ArrayNPE problem from occurring by initializing the List field through new ArrayList<>();.";
+        final String selfAskEnd = "self-Ask Example End.";
 
         messages.add(Message.createSelfAskMessage(selfAskStart));
+        messages.add(Message.createSelfAnswerMessage(selfAskStartAnswer));
+        messages.add(Message.createSelfAskMessage(selfAskExample));
         messages.add(Message.createSelfAskMessage(selfAsk1));
         messages.add(Message.createSelfAnswerMessage(selfAskAnswer1));
         messages.add(Message.createSelfAskMessage(selfAsk2));
@@ -102,17 +103,7 @@ public class ChatGptRequestDto {
         messages.add(Message.createSelfAnswerMessage(selfAskAnswer3));
         messages.add(Message.createSelfAskMessage(selfAsk4));
         messages.add(Message.createSelfAnswerMessage(selfAskAnswer4));
-        messages.add(Message.createSelfAskMessage(selfAsk5));
-        messages.add(Message.createSelfAnswerMessage(selfAskAnswer5));
         messages.add(Message.createSelfAskMessage(selfAskEnd));
     }
 
-    @Override
-    public String toString() {
-        return "ChatGptRequestDto{" +
-                "model='" + model + '\'' +
-                ", messages=" + messages +
-                ", temperature=" + temperature +
-                '}';
-    }
 }

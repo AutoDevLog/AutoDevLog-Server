@@ -26,11 +26,4 @@ public class Message {
         return new Message("user",content);
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "role='" + role + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
 }
