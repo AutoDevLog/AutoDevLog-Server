@@ -19,4 +19,18 @@ public class Message {
         return new Message("user",format + content);
     }
 
+    public static Message createSelfAskMessage(String content) {
+        return new Message("user",content);
+    }
+    public static Message createSelfAnswerMessage(String content) {
+        return new Message("user",content);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "role='" + role + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
