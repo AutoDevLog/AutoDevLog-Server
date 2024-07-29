@@ -18,7 +18,7 @@ public class ChatGptRequestDto {
     private static final String exampleCode = "present example code and solution for the requested issue";
     private static final String writingStyle =  "글을 작성할때 평서체를 사용해서 글을 작성해줘";
     private static final String writingFormat = "Format: \" #이슈 정의 \"\n, \" #issue example code \" \n,\"#원인 추론 \" \n,\"#해결 방법\"\n, \"#solution example code \" ";
-    private static final String selfAsk = "When writing an article, use the self-ask technique using the example provided below.";
+
 
     private static final String issue = "start keyword(issue): ";
     private static final String inference = "middle keyword(inference): ";
